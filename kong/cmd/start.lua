@@ -7,6 +7,7 @@ local log = require "kong.cmd.utils.log"
 local DB = require "kong.db"
 
 local function execute(args)
+    
   local conf = assert(conf_loader(args.conf, {
     prefix = args.prefix
   }))
@@ -60,6 +61,7 @@ local function execute(args)
     assert(nginx_signals.start(conf))
 
     log("Kong started")
+  
   end, function(e)
     err = e -- cannot throw from this function
   end)
@@ -70,6 +72,7 @@ local function execute(args)
     log.verbose("stopped services")
     error(err) -- report to main error handler
   end
+   
 end
 
 local lapp = [[
@@ -89,3 +92,4 @@ return {
   lapp = lapp,
   execute = execute
 }
+   

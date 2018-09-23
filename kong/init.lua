@@ -23,11 +23,10 @@
 -- ==========
 -- |[[    ]]|
 -- ==========
-
 require "luarocks.loader"
 require "resty.core"
 local constants = require "kong.constants"
-
+    
 do
   -- let's ensure the required shared dictionaries are
   -- declared via lua_shared_dict in the Nginx conf
@@ -360,6 +359,7 @@ function Kong.ssl_certificate()
 end
 
 function Kong.balancer()
+
   kong_global.set_phase(kong, PHASES.balancer)
 
   local ctx = ngx.ctx
@@ -457,6 +457,8 @@ function Kong.balancer()
 end
 
 function Kong.rewrite()
+  require('mobdebug').start('127.0.0.1')
+
   kong_resty_ctx.stash_ref()
   kong_global.set_phase(kong, PHASES.rewrite)
 
